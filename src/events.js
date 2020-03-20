@@ -39,6 +39,10 @@ const HlsEvents = {
   LEVEL_SWITCHED: "hlsLevelSwitched",
   // fired when a level playlist loading starts - data: { url : level URL, level : id of level being loaded}
   LEVEL_LOADING: "hlsLevelLoading",
+  // fired when a level playlist loading init starts
+  LEVEL_LOADING_INIT: "hlsLevelLoadingInit",
+  // fired when a level playlist loading init finishes
+  LEVEL_LOADING_INITED: "hlsLevelLoadingInited",
   // fired when a level playlist loading finishes - data: { details : levelDetails object, level : id of loaded level, stats : { trequest, tfirst, tload, mtime} }
   LEVEL_LOADED: "hlsLevelLoaded",
   // fired when a level's details have been updated based on previous details, after it has been loaded - data: { details : levelDetails object, level : id of updated level }

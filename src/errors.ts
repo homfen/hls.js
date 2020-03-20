@@ -7,6 +7,8 @@ export enum ErrorTypes {
   KEY_SYSTEM_ERROR = "keySystemError",
   // Identifier for a mux Error (demuxing/remuxing)
   MUX_ERROR = "muxError",
+  // level init error
+  LEVEL_INIT_ERROR = "levelInitError",
   // frag init error
   FRAG_INIT_ERROR = "fragInitError",
   // Identifier for all other errors

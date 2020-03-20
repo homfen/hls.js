@@ -3,6 +3,7 @@ import * as URLToolkit from "url-toolkit";
 import { ErrorTypes, ErrorDetails } from "./errors";
 
 import PlaylistLoader from "./loader/playlist-loader";
+import PlaylistInit from "./loader/playlist-init";
 import FragmentLoader from "./loader/fragment-loader";
 import FragmentInit from "./loader/fragment-init";
 import KeyLoader from "./loader/key-loader";
@@ -159,6 +160,7 @@ export default class Hls extends Observer {
     )); // eslint-disable-line new-cap
     const fpsController = new config.fpsController(this); // eslint-disable-line new-cap
     const playListLoader = new PlaylistLoader(this);
+    const playListInit = new PlaylistInit(this);
     const fragmentLoader = new FragmentLoader(this);
     const fragmentInit = new FragmentInit(this);
     const keyLoader = new KeyLoader(this);
@@ -203,6 +205,7 @@ export default class Hls extends Observer {
      */
     const coreComponents = [
       playListLoader,
+      playListInit,
       fragmentLoader,
       fragmentInit,
       keyLoader,
