@@ -7,6 +7,8 @@ import EventHandler from "../event-handler";
 import { ErrorTypes, ErrorDetails } from "../errors";
 import { logger } from "../utils/logger";
 
+const tsCache = {};
+
 class FragmentLoader extends EventHandler {
   constructor(hls) {
     super(hls, Event.FRAG_LOADING, Event.FRAG_LOADING_INITED);
@@ -40,6 +42,23 @@ class FragmentLoader extends EventHandler {
 
     // reset fragment state
     frag.loaded = 0;
+
+    const cachePayload = tsCache[`v${frag.level}-${frag.relurl}`];
+    const now = window.performance.now();
+    if (cachePayload) {
+      this.hls.trigger(Event.FRAG_LOADED, {
+        payload: cachePayload,
+        frag: frag,
+        stats: {
+          tfirst: now,
+          trequest: now,
+          tload: now,
+          loaded: cachePayload.byteLength,
+          total: cachePayload.byteLength
+        }
+      });
+      return;
+    }
 
     let loader = loaders[type];
     if (loader) {
@@ -91,6 +110,7 @@ class FragmentLoader extends EventHandler {
     // detach fragment loader on load success
     frag.loader = undefined;
     this.loaders[frag.type] = undefined;
+    tsCache[`v${frag.level}-${frag.relurl}`] = payload;
     this.hls.trigger(Event.FRAG_LOADED, {
       payload: payload,
       frag: frag,
